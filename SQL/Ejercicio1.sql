@@ -63,3 +63,30 @@ WHERE cantidad =5
 "A".*/
 SELECT * FROM public.clientes
 WHERE name LIKE 'A%'
+/*16. Realizar una consulta que muestre el nombre del cliente y el total de pedidos
+realizados por cada cliente.*/
+SELECT name as "nombre cliente", cantidad as "total pedidos"
+FROM public.clientes
+LEFT JOIN public.pedidos
+ON clientes.id = pedidos.cliente_id;
+/*17. Realizar una consulta que muestre el nombre del producto y la cantidad total de
+pedidos de ese producto.*/
+SELECT name as "producto", cantidad as "cantidad pedidos"
+FROM public.producto
+LEFT JOIN public.pedidos
+ON producto.id = pedidos.producto_id;
+/*18. Agregar una columna llamada "fecha" a la tabla "Pedidos" de tipo fecha.*/
+ALTER TABLE public.pedidos
+ADD fecha DATE;
+/*19. Agregar una clave externa a la tabla "Pedidos" que haga referencia a la tabla
+"Productos" en la columna "producto".*/
+ALTER TABLE public.Pedidos
+ADD CONSTRAINT fk_producto
+FOREIGN KEY (producto)
+REFERENCES productos (name)
+/*20. Realizar una consulta que muestre los nombres de los clientes, los nombres de
+los productos y las cantidades de los pedidos donde coincida la clave externa.*/
+SELECT C.nombre AS "Nombre del Cliente", P.nombre AS "Nombre del Producto", Pd.cantidad AS "Cantidad del Pedido"
+FROM Clientes AS C
+INNER JOIN Pedidos AS Pd ON C.id = Pd.cliente_id
+INNER JOIN Productos AS P ON P.nombre = Pd.producto;
